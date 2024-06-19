@@ -143,6 +143,6 @@ list.insert(1, "Second");
 list.insert(5, "test");
 list.get(6);
 list.remove(1);
-list.reverse();
+list.reversev2();
 list.printList();
 // console.log(list);

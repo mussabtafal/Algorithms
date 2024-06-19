@@ -103,45 +103,34 @@ class DoublyLinkedList {
     node.val = val;
   }
 
-  //   insert(index, val) {
-  //     if (index < 0 || index > this.length - 1) return undefined;
-  //     if (index === 0) {
-  //       return this.unshift(val);
-  //     } else if (index === this.length - 1) {
-  //       return this.push(val);
-  //     } else {
-  //       let newNode = new Node(val);
-  //       let mid = Math.floor(this.length / 2);
-  //       let current;
-  //       if (index <= mid) {
-  //         let count = 0;
-  //         current = this.head;
-  //         while (count !== index) {
-  //           current = current.next;
-  //           count++;
-  //         }
-  //       } else {
-  //         let count = this.length - 1;
-  //         current = this.tail;
-  //         while (count !== index) {
-  //           current = current.prev;
-  //           count--;
-  //         }
-  //       }
-  //       newNode.prev = current.prev;
-  //       newNode.next = current;
-  //       current.prev.next = newNode;
-  //       current.prev = newNode;
-  //     }
-  //   }
-
-  insertV2(index, val) {
-    let current = this.get(index);
-    let newNode = new Node(val);
-    if (current) {
+  insert(index, val) {
+    if (index < 0 || index > this.length - 1) return undefined;
+    if (index === 0) {
+      return this.unshift(val);
+    } else if (index === this.length - 1) {
+      return this.push(val);
+    } else {
+      let newNode = new Node(val);
+      let mid = Math.floor(this.length / 2);
+      let current;
+      if (index <= mid) {
+        let count = 0;
+        current = this.head;
+        while (count !== index) {
+          current = current.next;
+          count++;
+        }
+      } else {
+        let count = this.length - 1;
+        current = this.tail;
+        while (count !== index) {
+          current = current.prev;
+          count--;
+        }
+      }
       newNode.prev = current.prev;
-      current.prev.next = newNode;
       newNode.next = current;
+      current.prev.next = newNode;
       current.prev = newNode;
     }
   }
@@ -153,6 +142,25 @@ class DoublyLinkedList {
     removed.next = null;
     removed.prev = null;
     this.length--;
+  }
+
+  reverse() {
+    if (!this.head) return null;
+    if (!this.head.next) return this;
+
+    let prev = null;
+    let current = this.head;
+    this.tail = this.head;
+
+    while (current) {
+      let nextNode = current.next;
+      current.next = prev;
+      current.prev = nextNode;
+      prev = current;
+      current = nextNode;
+    }
+    this.head = prev;
+    return this;
   }
 
   printList() {
@@ -176,7 +184,8 @@ list.push(4);
 list.unshift(0);
 // list.shift();
 // list.set(1, "first");
-list.insertV2(2, "second");
+list.insert(2, "second");
 list.remove(2);
+list.reverse();
 list.printList();
 // console.log(list.get(2));
