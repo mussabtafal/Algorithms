@@ -295,4 +295,140 @@ function radixSort(arr) {
   return arr;
 }
 
-radixSort([23, 345, 5476, 12, 2345, 1]);
+// radixSort([23, 345, 5476, 12, 2345, 1]);
+
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+class Bts {
+  constructor() {
+    this.root = null;
+  }
+
+  insert(val) {
+    let newNode = new Node(val);
+    if (!this.root) {
+      this.root = newNode;
+      return this;
+    } else {
+      let current = this.root;
+      while (true) {
+        if (val === current.value) return undefined;
+        if (val < current.value) {
+          if (current.left) {
+            current = current.left;
+          } else {
+            current.left = newNode;
+            return this;
+          }
+        } else if (val > current.value) {
+          if (current.right) {
+            current = current.right;
+          } else {
+            current.right = newNode;
+            return this;
+          }
+        }
+      }
+    }
+  }
+
+  find(val) {
+    if (!this.root) return null;
+    let current = this.root;
+    while (true) {
+      if (current.value === val) return current;
+      if (current.value > val) {
+        if (!current.left) return;
+        current = current.left;
+      } else {
+        if (!current.right) return;
+        current = current.right;
+      }
+    }
+  }
+
+  bfs() {
+    if (!this.root) return undefined;
+    var q = [],
+      data = [],
+      node = this.root;
+    q.push(node);
+    while (q.length) {
+      let node = q.shift();
+      data.push(node.value);
+
+      if (node.left) q.push(node.left);
+      if (node.right) q.push(node.right);
+    }
+    return data;
+  }
+
+  dfs() {
+    if (!this.root) return undefined;
+    let values = [];
+    let current = this.root;
+
+    function traverse(node) {
+      values.push(node.value);
+      if (node.left) {
+        traverse(node.left);
+      }
+      if (node.right) {
+        traverse(node.right);
+      }
+    }
+
+    traverse(current);
+    return values;
+  }
+
+  bf() {
+    if (!this.root) return undefined;
+    var node = this.root,
+      q = [],
+      data = [];
+
+    q.push(node);
+    while (q.length) {
+      let node = q.shift();
+      data.push(node.value);
+      if (node.left) q.push(node.left);
+      if (node.right) q.push(node.right);
+    }
+    return data;
+  }
+
+  df() {
+    if (!this.root) return undefined;
+    let current = this.root;
+    let values = [];
+
+    function traverse(node) {
+      values.push(node.value);
+
+      if (node.left) {
+        traverse(node.left);
+      }
+      if (node.right) {
+        traverse(node.rights);
+      }
+    }
+
+    traverse(current);
+    return values;
+  }
+}
+
+let rr = new Bts();
+
+rr.insert(10);
+rr.insert(5);
+rr.insert(16);
+console.log(rr.bf());
+console.log(rr.df());
